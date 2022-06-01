@@ -1,24 +1,14 @@
 class SalesAnalyst
 
+  attr_accessor :item_repository, :merchant_repository
 
-  def initialize
-
+  def initialize(item_repository,merchant_repository)
+    @item_repository = item_repository
+    @merchant_repository = merchant_repository
   end
 
   def average_items_per_merchant
-    #@all.count
-    # Call total # of items divided by total # of merchants
-
-
+    item_repository.all.count / merchant_repository.all.count
   end
 
-  def average_items_per_merchant_standard_deviation
-    #using sample standard deviation
-#     Take the difference between each number and the mean, then square it.
-#   Sum these square differences together.
-#   Divide the sum by the number of elements minus 1.
-#   Take the square root of this result.
-
-
-  end
 end
