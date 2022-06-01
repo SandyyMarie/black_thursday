@@ -23,7 +23,9 @@ RSpec.describe SalesAnalyst do
   end
 
   it "can determine average items" do
+    # require 'pry'; binding.pry
     expect(@sales_analyst.average_items_per_merchant).to eq(2.88)
+
   end
 
   xit "can determine standard deviation" do
