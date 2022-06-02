@@ -43,10 +43,9 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.difference_between_merchant_items_and_mean(12334135)).to eq(1.88)
 
     expect(sales_analyst.difference_between_merchant_items_and_mean(12334315)).to eq(2.12)
-
   end
 
-  xit 'can return sum of differences squared' do
+  it 'can return sum of differences squared' do
     sales_engine = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv"
