@@ -11,4 +11,8 @@ class SalesAnalyst
     (item_repository.all.count.to_f / merchant_repository.all.count.to_f).round(2)
   end
 
+  def difference_between_number_and_mean(num)
+    (num.to_f - average_items_per_merchant.to_f).abs
+  end
+
 end
