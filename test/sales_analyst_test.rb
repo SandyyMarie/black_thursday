@@ -52,10 +52,17 @@ RSpec.describe SalesAnalyst do
       })
     sales_analyst = sales_engine.analyst
 
-    expect(sales_analyst.sum_of_differences_squared).to eq(5)
+    expect(sales_analyst.sum_of_differences_squared).to eq(11338.44)
+    # I don't feel 100% confident in this
   end
 
-  xit "can determine standard deviation" do
-    expect(@sales_analyst.average_items_per_merchant_standard_deviation).to eq(3.26)
+  it "can determine standard deviation" do
+    sales_engine = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv"
+      })
+    sales_analyst = sales_engine.analyst
+
+    expect(sales_analyst.average_items_per_merchant_standard_deviation).to eq(3.26)
   end
 end

@@ -1,3 +1,5 @@
+require 'pry'
+
 class SalesAnalyst
 
   attr_accessor :item_repository, :merchant_repository
@@ -21,6 +23,10 @@ class SalesAnalyst
       return_num += (difference_between_merchant_items_and_mean(item.id) ** 2)
     end
     return_num.round(2)
+  end
+
+  def average_items_per_merchant_standard_deviation
+    Math.sqrt((sum_of_differences_squared / (@merchant_repository.all.count - 1))).round(2)
   end
 
 end
