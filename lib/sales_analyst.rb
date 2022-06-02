@@ -15,11 +15,12 @@ class SalesAnalyst
     (@item_repository.find_all_by_merchant_id(merchant_id).count.to_f - average_items_per_merchant.to_f).abs
   end
 
-  # def sum_of_differences_squared
-  #   return_num = 0
-  #   @item_repository.all.each do |item|
-  #     return_num += item.
-  #   end
-  # end
+  def sum_of_differences_squared
+    return_num = 0
+    @item_repository.all.each do |item|
+      return_num += (difference_between_merchant_items_and_mean(item.id) ** 2)
+    end
+    return_num.round(2)
+  end
 
 end
