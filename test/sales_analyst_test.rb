@@ -100,7 +100,11 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.invoice_paid_in_full?(204)).to be false
   end
 
-  it 'returns total revenue for a given date' do
+  it 'returns total $ amount for given invoice' do
+    expect(sales_analyst.invoice_total(1)).to eq(21067.77)
+  end
+
+  xit 'returns total revenue for a given date' do
     date = Time.parse("2009-02-07")
 
     expect(sales_analyst.total_revenue_by_date(date)).to eq(21067.77)
