@@ -90,6 +90,16 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.invoice_status(:returned)).to eq(13.5)
   end
 
+  it 'returns whether invoice has been paid in full' do
+    expect(sales_analyst.invoice_paid_in_full?(1)).to be true
+
+    expect(sales_analyst.invoice_paid_in_full?(200)).to be true
+
+    expect(sales_analyst.invoice_paid_in_full?(203)).to be false
+
+    expect(sales_analyst.invoice_paid_in_full?(204)).to be false
+  end
+
   it 'returns total revenue for a given date' do
     date = Time.parse("2009-02-07")
 
