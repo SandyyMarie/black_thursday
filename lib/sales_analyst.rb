@@ -1,4 +1,5 @@
 require 'helper'
+require 'pry'
 
 class SalesAnalyst
   attr_accessor :item_repository,
@@ -12,7 +13,7 @@ class SalesAnalyst
     @item_repository = item_repository
     @merchant_repository = merchant_repository
     @invoice_repository = invoice_repository
-    @invoice_item_repository = invoice_repository
+    @invoice_item_repository = invoice_item_repository
     @transaction_repository = transaction_repository
     @customer_repository = customer_repository
   end
@@ -84,6 +85,16 @@ class SalesAnalyst
     results = transactions.map {|transaction| transaction.result}
 
     !results.include?("failed")
+  end
+
+  def invoice_total(invoice_id)
+    if invoice_paid_in_full?(invoice_id) == false
+      return false
+    end
+
+    invoice_items = @invoice_item_repository.find_all_by_invoice_id(invoice_id)
+
+    invoice_items.sum {|invoice| invoice.quantity * invoice.unit_price_to_dollars}
   end
 
   # def total_revenue_by_date(date)
