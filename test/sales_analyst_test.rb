@@ -85,4 +85,10 @@ RSpec.describe SalesAnalyst do
   xit 'returns percent of invoices returned' do
     expect(sales_analyst.invoice_status(:returned)).to eq(13.5)
   end
+
+  it 'returns total revenue for a given date' do
+    date = Time.parse("2009-02-07")
+
+    expect(sales_analyst.total_revenue_by_date(date)).to eq(21067.77)
+  end
 end
