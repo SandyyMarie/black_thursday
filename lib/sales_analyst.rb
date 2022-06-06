@@ -1,10 +1,18 @@
 class SalesAnalyst
   attr_accessor :item_repository,
-                :merchant_repository
+                :merchant_repository,
+                :invoice_repository,
+                :invoice_item_repository,
+                :transaction_repository,
+                :customer_repository
 
-  def initialize(item_repository, merchant_repository)
+  def initialize(item_repository, merchant_repository,invoice_repository,invoice_item_repository,tratransaction_repository,customer_repository)
     @item_repository = item_repository
     @merchant_repository = merchant_repository
+    @invoice_repository = invoice_repository
+    @invoice_item_repository = invoice_repository
+    @transaction_repository = transaction_repository
+    @customer_repository = customer_repository
   end
 
   def average_items_per_merchant #2.88
@@ -62,5 +70,9 @@ class SalesAnalyst
   def golden_items
     standard_dev = item_price_standard_deviation
     @item_repository.all.select {|item| item.unit_price_to_dollars > (average_item_price + (standard_dev * 2))}
+  end
+
+  def total_revenue_by_date(date)
+    @invoice_item_repository
   end
 end

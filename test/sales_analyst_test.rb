@@ -5,7 +5,11 @@ require './lib/helper'
 RSpec.describe SalesAnalyst do
   let!(:sales_engine) {SalesEngine.from_csv({
     :items     => "./data/items.csv",
-    :merchants => "./data/merchants.csv"
+    :merchants => "./data/merchants.csv",
+    :invoices => "./data/invoices.csv",
+    :invoice_items => './data/invoice_items.csv',
+    :transactions => './data/transactions.csv',
+    :customers => './data/customers.csv'
   })}
   let!(:sales_analyst) {sales_engine.analyst
   }
