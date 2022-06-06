@@ -1,3 +1,5 @@
+require 'helper'
+
 class SalesAnalyst
   attr_accessor :item_repository,
                 :merchant_repository,
@@ -6,7 +8,7 @@ class SalesAnalyst
                 :transaction_repository,
                 :customer_repository
 
-  def initialize(item_repository, merchant_repository,invoice_repository,invoice_item_repository,tratransaction_repository,customer_repository)
+  def initialize(item_repository, merchant_repository,invoice_repository,invoice_item_repository,transaction_repository,customer_repository)
     @item_repository = item_repository
     @merchant_repository = merchant_repository
     @invoice_repository = invoice_repository
@@ -64,7 +66,7 @@ class SalesAnalyst
 
   def item_price_standard_deviation
     total = @item_repository.all.sum {|item| (item.unit_price_to_dollars - average_item_price) ** 2}
-     Math.sqrt(total / @item_repository.all.count - 1).round(2)
+    Math.sqrt(total / @item_repository.all.count - 1).round(2)
   end
 
   def golden_items
@@ -72,7 +74,23 @@ class SalesAnalyst
     @item_repository.all.select {|item| item.unit_price_to_dollars > (average_item_price + (standard_dev * 2))}
   end
 
-  def total_revenue_by_date(date)
-    @invoice_item_repository
+  def invoice_paid_in_full?(invoice_id)
+    transactions = @transaction_repository.find_all_by_invoice_id(invoice_id)
+
+    if transactions.length == 0
+      return false
+    end
+
+    results = transactions.map {|transaction| transaction.result}
+
+    !results.include?("failed")
   end
+
+  # def total_revenue_by_date(date)
+  #   unrejected_invoices = []
+  #
+  #   @invoice
+  #
+  #   @invoice_item_repository.sum {|invoice| invoice_item.quantity * invoice_item.unit_price}
+  # end
 end
