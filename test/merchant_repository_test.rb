@@ -1,5 +1,7 @@
-require './lib/helper'
+require 'simplecov'
 SimpleCov.start
+require './lib/helper'
+
 
 RSpec.describe MerchantRepository do
   let!(:sales_engine) {SalesEngine.from_csv({:merchants => "./data/merchants.csv"})}

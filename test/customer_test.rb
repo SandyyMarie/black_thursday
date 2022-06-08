@@ -1,5 +1,7 @@
-require './lib/helper'
+require 'simplecov'
 SimpleCov.start
+require './lib/helper'
+
 
 RSpec.describe Customer do
   let!(:time) {Time.now}
