@@ -1,4 +1,5 @@
 require_relative 'helper'
+require 'pry'
 
 class SalesAnalyst
   include Findable
@@ -170,7 +171,7 @@ class SalesAnalyst
   end
 
   def invoice_status(status)
-    numerator_count = @invoice_repository.find_all_by_status(status).count
+    numerator_count = @invoice_repository.find_all_by_status(status.to_s).count
     ((numerator_count.to_f / @invoice_repository.all.count.to_f) * 100).round(2)
   end
 
@@ -192,6 +193,56 @@ class SalesAnalyst
       end
     end
     total.round(2)
+  end
+
+  def merchants_with_pending_invoices
+
+    invoice_ids = @invoice_repository.all.map {|invoice| invoice.id}.uniq
+
+    invoice_transaction_hash = {}
+
+    invoice_ids.each do |id|
+      invoice_transaction_hash[id] = @transaction_repository.find_all_by_invoice_id(id)
+    end
+
+    unsuccessful_invoices = []
+
+    invoice_transaction_hash.each do |id,transactions|
+      if transactions.all? {|transaction| transaction.result != "success"}
+        unsuccessful_invoices << id
+      end
+    end
+
+    unsuccessful_invoice_instances = unsuccessful_invoices.map {|invoice| @invoice_repository.find_by_id(invoice)}
+
+    unsuccessful_invoice_merchants = unsuccessful_invoice_instances.map {|invoice| invoice.merchant_id}.uniq
+
+    merchant_instances = unsuccessful_invoice_merchants.map {|merchant_id| @merchant_repository.find_by_id(merchant_id)}
+
+    merchant_instances
+  end
+
+  def merchant_creation_month(merchant_id)
+    merchant = @merchant_repository.find_by_id(merchant_id)
+
+    merchant_date_split = merchant.created_at.split("-")
+
+    Date::MONTHNAMES[merchant_date_split[1].to_i]
+  end
+
+  def merchants_with_only_one_item
+    merchant_item_hash = {}
+    @merchant_repository.all.each do |merchant|
+      merchant_item_hash[merchant] = @item_repository.find_all_by_merchant_id(merchant.id)
+    end
+
+    merchants_with_one_item = merchant_item_hash.delete_if {|merchant,items| items.length > 1}
+
+    merchants_with_one_item.keys
+  end
+
+  def merchants_with_only_one_item_registered_in_month(month)
+    merchants_with_only_one_item.delete_if {|merchant| merchant_creation_month(merchant.id) != month}
   end
 
   def top_revenue_earners(number_to_rank = 20)

@@ -26,5 +26,4 @@ RSpec.describe Merchant do
   it "returns time created" do
     expect(merchant.created_at.strftime("%Y-%m-%d %H:%M")).to eq(time.strftime("%Y-%m-%d %H:%M"))
   end
-
 end

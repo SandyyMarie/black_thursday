@@ -56,7 +56,6 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.golden_items).to be_instance_of(Array)
     expect(sales_analyst.golden_items.length).to eq(5)
     expect(sales_analyst.golden_items.first.class).to eq(Item)
-
   end
 
   it 'returns average invoices per merchant' do
@@ -128,6 +127,7 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.invoice_status(:returned)).to eq(13.5)
   end
 
+
   it 'returns whether invoice has been paid in full' do
     expect(sales_analyst.invoice_paid_in_full?(1)).to be true
 
@@ -159,21 +159,42 @@ RSpec.describe SalesAnalyst do
   end
 
   it 'returns sorted array of merchants by revenue' do
-    expected = sales_analyst.top_revenue_earners(10)
-    first = expected.first
-    last = expected.last
-    expect(expected.length).to eq(10)
+    expect(sales_analyst.top_revenue_earners.length).to eq(20)
 
-    expect(first.class).to eq(Merchant)
-    expect(first.id).to eq(12334634) #problem
+    expect(sales_analyst.top_revenue_earners(10).length).to eq(10)
 
-    expect(last.class).to eq(Merchant)
-    expect(last.id).to eq(12335747)
+    expect(sales_analyst.top_revenue_earners.first.class).to eq(Merchant)
+    expect(sales_analyst.top_revenue_earners.first.id).to eq(12334634)
   end
-  #Problem below me
-  it 'returns most sold item, if it is a tie then it returns an array of items' do
-    expect(sales_analyst.most_sold_item_for_merchant(12334634)).to eq([])
-  end #need more accurate test
+
+  it 'returns month a merchant was created' do
+    expect(sales_analyst.merchant_creation_month(12334105)).to eq("December")
+
+    expect(sales_analyst.merchant_creation_month(12334112)).to eq("May")
+  end
+
+  it 'returns merchants with only one item' do
+    expect(sales_analyst.merchants_with_only_one_item.length).to eq(243)
+  end
+
+  it 'returns merchants with only one item registered in their first month' do
+    expected = sales_analyst.merchants_with_only_one_item_registered_in_month("March")
+
+    expect(expected.length).to eq 21
+    expect(expected.first.class).to eq Merchant
+
+    expected = sales_analyst.merchants_with_only_one_item_registered_in_month("June")
+
+    expect(expected.length).to eq 18
+    expect(expected.first.class).to eq Merchant
+  end
+
+  it 'returns merchants with pending invoices' do
+    expect(sales_analyst.merchants_with_pending_invoices.length).to eq(467)
+
+    expect(sales_analyst.merchants_with_pending_invoices.first).to be_instance_of(Merchant)
+  end
+
   #Problem below me
   it 'returns most sold item, if it is a tie then it returns an array of items' do
     expect(sales_analyst.best_item_for_merchant(12334634)).to eq([])
