@@ -31,14 +31,14 @@ RSpec.describe CustomerRepository do
     new_customer
     expect(customer_repo.find_by_first_name("Joan")).to be_instance_of Customer
     expect(customer_repo.find_by_first_name("Joan").id).to eq(1001)
-    # expect(customer_repo.find_by_first_name("Joan").last_name).to eq("Clarke")
+    expect(customer_repo.find_by_first_name("Joan").last_name).to eq("Clarke")
   end
 
-  it "can find all customers by their last_name" do
+  it "can find customers by their last_name" do
     new_customer
-    expect(customer_repo.find_all_by_last_name("Clarke").first).to be_instance_of Customer
-    expect(customer_repo.find_all_by_last_name("Clarke").first.id).to eq(1001)
-    expect(customer_repo.find_all_by_last_name("Clarke").first.first_name).to eq("Joan")
+    expect(customer_repo.find_by_last_name("Clarke")).to be_instance_of Customer
+    expect(customer_repo.find_by_last_name("Clarke").id).to eq(1001)
+    expect(customer_repo.find_by_last_name("Clarke").first_name).to eq("Joan")
   end
 
   it "can find customers by their invoice id" do
