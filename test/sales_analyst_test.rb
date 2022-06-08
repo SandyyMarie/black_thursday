@@ -180,6 +180,6 @@ RSpec.describe SalesAnalyst do
   end
 
   it "returns which merchants offer only one item" do
-    expect(sales_analyst.merchants_with_only_one_item).to be_instance_of(Merchant)
-  end
+    expect(sales_analyst.merchants_with_only_one_item).to eq([])
+  end #test does not pass, not sure how to tell it to expect
 end
