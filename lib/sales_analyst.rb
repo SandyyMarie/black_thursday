@@ -171,7 +171,7 @@ class SalesAnalyst
   end
 
   def invoice_status(status)
-    numerator_count = @invoice_repository.find_all_by_status(status).count
+    numerator_count = @invoice_repository.find_all_by_status(status.to_s).count
     ((numerator_count.to_f / @invoice_repository.all.count.to_f) * 100).round(2)
   end
 
