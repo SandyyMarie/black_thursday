@@ -171,6 +171,12 @@ RSpec.describe SalesAnalyst do
     expect(last.id).to eq(12335747)
   end
 
+  it 'returns merchants with pending invoices' do
+    expect(sales_analyst.merchants_with_pending_invoices.length).to eq(467)
+
+    expect(sales_analyst.merchants_with_pending_invoices.first).to be_instance_of(Merchant)
+  end
+
   it 'returns most sold item, if it is a tie then it returns an array of items' do
     expect(sales_analyst.most_sold_item_for_merchant(12334634)).to eq([])
   end #need more accurate test
