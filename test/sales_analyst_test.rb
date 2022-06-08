@@ -163,6 +163,12 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.top_revenue_earners.first.id).to eq(12334634)
   end
 
+  it 'returns month a merchant was created' do
+    expect(sales_analyst.merchant_creation_month(12334105)).to eq("December")
+
+    expect(sales_analyst.merchant_creation_month(12334112)).to eq("May")
+  end
+
   it 'returns merchants with only one item registered in given month' do
     expect(sales_analyst.merchants_with_only_one_item_registered_in_month("March").length).to eq(21)
   end
