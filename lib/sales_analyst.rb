@@ -249,15 +249,26 @@ class SalesAnalyst
     item_most_profitable
   end
 
-    def merchants_with_only_one_item
-      merch_array = []
-      @merchant_repository.all.each do |merchant|
-        if (@item_repository.find_all_by_merchant_id(merchant.id).count == 1)
-          #avg items per merchant
-          merch_array << merchant
-        end
-      end
-      merch_array
+
+  def merchants_with_only_one_item
+    merchant_item_hash = {}
+    @merchant_repository.all.each do |merchant|
+      merchant_item_hash[merchant] = @item_repository.find_all_by_merchant_id(merchant.id)
+    end
+
+    merchants_with_one_item = merchant_item_hash.delete_if {|merchant,items| items.length > 1}
+
+    merchants_with_one_item.keys
   end
+  #   def merchants_with_only_one_item
+  #     merch_array = []
+  #     @merchant_repository.all.each do |merchant|
+  #       if (@item_repository.find_all_by_merchant_id(merchant.id).count == 1)
+  #         #avg items per merchant
+  #         merch_array << merchant
+  #       end
+  #     end
+  #     merch_array
+  # end
 
 end
