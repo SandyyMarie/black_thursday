@@ -196,9 +196,30 @@ class SalesAnalyst
   end
 
   def merchants_with_pending_invoices
-    pending_invoices = @invoice_repository.find_all_by_status("pending")
 
-    pending_invoices.map {|invoice| invoice.merchant_id}.uniq
+    invoice_ids = @invoice_repository.all.map {|invoice| invoice.id}.uniq
+
+    invoice_transaction_hash = {}
+
+    invoice_ids.each do |id|
+      invoice_transaction_hash[id] = @transaction_repository.find_all_by_invoice_id(id)
+    end
+
+    unsuccessful_invoices = []
+
+    invoice_transaction_hash.each do |id,transactions|
+      if transactions.all? {|transaction| transaction.result != "success"}
+        unsuccessful_invoices << id
+      end
+    end
+
+    unsuccessful_invoice_instances = unsuccessful_invoices.map {|invoice| @invoice_repository.find_by_id(invoice)}
+
+    unsuccessful_invoice_merchants = unsuccessful_invoice_instances.map {|invoice| invoice.merchant_id}.uniq
+
+    merchant_instances = unsuccessful_invoice_merchants.map {|merchant_id| @merchant_repository.find_by_id(merchant_id)}
+
+    merchant_instances
   end
 
   def merchant_creation_month(merchant_id)

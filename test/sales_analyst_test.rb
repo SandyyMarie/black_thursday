@@ -173,7 +173,7 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.merchants_with_only_one_item_registered_in_month.length).to eq(3)
   end
 
-  xit 'returns merchants with pending invoices' do
+  it 'returns merchants with pending invoices' do
     expect(sales_analyst.merchants_with_pending_invoices.length).to eq(467)
 
     #currently returning 448
