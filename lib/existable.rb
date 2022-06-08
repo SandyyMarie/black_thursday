@@ -28,7 +28,8 @@ module Existable
   def make_merchant(name)
     @all.push(Merchant.new({
       :id => max_id + 1,
-      :name => name
+      :name => name,
+      :created_at => created_at
     }))
   end
 
