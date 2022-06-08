@@ -1,4 +1,5 @@
 require_relative 'helper'
+require 'pry'
 
 class SalesAnalyst
   include Findable
@@ -192,6 +193,12 @@ class SalesAnalyst
       end
     end
     total.round(2)
+  end
+
+  def merchants_with_pending_invoices
+    pending_invoices = @invoice_repository.find_all_by_status("pending")
+
+    pending_invoices.map {|invoice| invoice.merchant_id}.uniq
   end
 
   def top_revenue_earners(number_to_rank = 20)
