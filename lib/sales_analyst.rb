@@ -209,7 +209,7 @@ class SalesAnalyst
     Date::MONTHNAMES[merchant_date_split[1].to_i]
   end
 
-  def merchants_with_only_one_item_registered_in_month(month)
+  def merchants_with_only_one_item_registered_in_month
     merchant_creation_date_hash = {}
 
     @merchant_repository.all.each do |merchant|

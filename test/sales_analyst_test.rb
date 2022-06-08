@@ -169,8 +169,8 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.merchant_creation_month(12334112)).to eq("May")
   end
 
-  it 'returns merchants with only one item registered in given month' do
-    expect(sales_analyst.merchants_with_only_one_item_registered_in_month("March").length).to eq(21)
+  it 'returns merchants with only one item registered in their first month' do
+    expect(sales_analyst.merchants_with_only_one_item_registered_in_month.length).to eq(3)
   end
 
   xit 'returns merchants with pending invoices' do
