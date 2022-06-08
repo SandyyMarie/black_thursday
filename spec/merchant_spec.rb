@@ -7,6 +7,7 @@ RSpec.describe Merchant do
   it 'exists' do
     merchant = Merchant.new({
       :id => 5,
+
       :name => "Turing School",
       :created_at => "2010-07-12"
       })
@@ -19,6 +20,7 @@ RSpec.describe Merchant do
       :id => 5,
       :name => "Turing School",
       :created_at => "2010-07-12"
+
       })
 
     expect(merchant.id).to eq(5)
@@ -43,5 +45,4 @@ RSpec.describe Merchant do
 
     expect(merchant.created_at).to eq("2010-07-12")
   end
-
 end

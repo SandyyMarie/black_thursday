@@ -15,15 +15,15 @@ RSpec.describe SalesAnalyst do
   let!(:sales_analyst) {sales_engine.analyst
   }
 
-  xit "exists" do
+  it "exists" do
     expect(sales_analyst).to be_instance_of(SalesAnalyst)
   end
 
-  xit "can determine average items" do
+  it "can determine average items" do
     expect(sales_analyst.average_items_per_merchant).to eq(2.88)
   end
 
-  xit "can determine standard deviation" do
+  it "can determine standard deviation" do
     expect(sales_analyst.average_items_per_merchant_standard_deviation).to eq(3.26)
   end
 
@@ -32,38 +32,41 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.merchants_with_high_item_count).to be_instance_of(Array)
   end
 
-  xit "can give us avg price of given merchants items" do
+  it "can give us avg price of given merchants items" do
     expect(sales_analyst.average_item_price_for_merchant(12334159)).to eq(3150)
   end
 
-  xit "can return sum of given merchants item prices" do
+  it "can return sum of given merchants item prices" do
     expect(sales_analyst.price_sum_helper(12334159)).to eq(31500)
   end
 
-  xit "can sum all of the averages and find the average price across all merchants" do
+  it "can sum all of the averages and find the average price across all merchants" do
     expect(sales_analyst.average_average_price_per_merchant).to eq(35029.47)
   end
 
-  xit 'returns overall average item price' do
+  it 'returns overall average item price' do
     expect(sales_analyst.average_item_price).to eq(25105.51)
   end
 
-  xit 'returns items that are two standard deviations above average item price' do
+  it 'returns standard deviation of item price' do
+    expect(sales_analyst.item_price_standard_deviation).to eq(290099)
+  end
+
+  it 'returns items that are two standard deviations above average item price' do
     expect(sales_analyst.golden_items).to be_instance_of(Array)
     expect(sales_analyst.golden_items.length).to eq(5)
     expect(sales_analyst.golden_items.first.class).to eq(Item)
-
   end
 
-  xit 'returns average invoices per merchant' do
+  it 'returns average invoices per merchant' do
     expect(sales_analyst.average_invoices_per_merchant).to eq(10.49)
   end
 
-  xit 'returns number of invoices for given merchant' do
+  it 'returns number of invoices for given merchant' do
      expect(sales_analyst.number_of_invoices_by_merchant_id(12335938)).to eq(16)
    end
 
-  xit 'returns average invoices per mechant standard deviation' do
+  it 'returns average invoices per mechant standard deviation' do
     expect(sales_analyst.average_invoices_per_merchant_standard_deviation).to eq(3.29)
   end
 
@@ -124,7 +127,8 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.invoice_status(:returned)).to eq(13.5)
   end
 
-  xit 'returns whether invoice has been paid in full' do
+
+  it 'returns whether invoice has been paid in full' do
     expect(sales_analyst.invoice_paid_in_full?(1)).to be true
 
     expect(sales_analyst.invoice_paid_in_full?(200)).to be true
@@ -134,27 +138,27 @@ RSpec.describe SalesAnalyst do
     expect(sales_analyst.invoice_paid_in_full?(204)).to be false
   end
 
-  xit 'returns total $ amount for given invoice' do
+  it 'returns total $ amount for given invoice' do
     expect(sales_analyst.invoice_total(1)).to eq(21067.77)
   end
 
-  xit 'returns array of transactions for a given date' do
+  it 'returns array of transactions for a given date' do
     expect(sales_analyst.invoices_by_date("2016-01-06")).to be_instance_of(Array)
 
     expect(sales_analyst.invoices_by_date("2016-01-06").length).to eq(3)
   end
 
-  xit 'returns total revenue for a given date' do
+  it 'returns total revenue for a given date' do
     expect(sales_analyst.total_revenue_by_date("2009-02-07")).to eq(21067.77)
   end
 
-  xit 'returns total revenue for a given merchant' do
+  it 'returns total revenue for a given merchant' do
     expect(sales_analyst.total_revenue_by_merchant(12336175)).to eq(0)
 
     expect(sales_analyst.total_revenue_by_merchant(12334634)).to eq(192528.87)
   end
 
-  xit 'returns sorted array of merchants by revenue' do
+  it 'returns sorted array of merchants by revenue' do
     expect(sales_analyst.top_revenue_earners.length).to eq(20)
 
     expect(sales_analyst.top_revenue_earners(10).length).to eq(10)
@@ -185,19 +189,14 @@ RSpec.describe SalesAnalyst do
     expect(expected.first.class).to eq Merchant
   end
 
-  xit 'returns merchants with pending invoices' do
+  it 'returns merchants with pending invoices' do
     expect(sales_analyst.merchants_with_pending_invoices.length).to eq(467)
-
-    #currently returning 448
 
     expect(sales_analyst.merchants_with_pending_invoices.first).to be_instance_of(Merchant)
   end
 
-  xit 'returns most sold item, if it is a tie then it returns an array of items' do
-    expect(sales_analyst.most_sold_item_for_merchant(12334634)).to eq([])
-  end #need more accurate test
-
-  xit 'returns most sold item, if it is a tie then it returns an array of items' do
+  #Problem below me
+  it 'returns most sold item, if it is a tie then it returns an array of items' do
     expect(sales_analyst.best_item_for_merchant(12334634)).to eq([])
   end
 end
