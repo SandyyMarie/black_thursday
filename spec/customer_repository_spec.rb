@@ -21,16 +21,24 @@ RSpec.describe CustomerRepository do
     expect(customer_repo.all).to be_a Array
   end
 
-  it "can find invoices items by their id" do
+  it "can find customers by their id" do
     new_customer
-    expect(customer_repo.find_by_id(6)).to be_instance_of Customer
-    expect(customer_repo.find_by_id(6).first_name).to eq("Joan")
+    expect(customer_repo.find_by_id(1001)).to be_instance_of Customer
+    expect(customer_repo.find_by_id(1001).last_name).to eq("Clarke")
   end
 
-  it "can find all customers by their item id" do
+  it "can find customers by their first name" do
     new_customer
-    expect(customer_repo.find_all_by_item_id(6).first).to be_instance_of Customer
-    expect(customer_repo.find_all_by_item_id(6).first.id).to eq(1)
+    expect(customer_repo.find_by_first_name("Joan")).to be_instance_of Customer
+    expect(customer_repo.find_by_first_name("Joan").id).to eq(1001)
+    # expect(customer_repo.find_by_first_name("Joan").last_name).to eq("Clarke")
+  end
+
+  it "can find all customers by their last_name" do
+    new_customer
+    expect(customer_repo.find_all_by_last_name("Clarke").first).to be_instance_of Customer
+    expect(customer_repo.find_all_by_last_name("Clarke").first.id).to eq(1001)
+    expect(customer_repo.find_all_by_last_name("Clarke").first.first_name).to eq("Joan")
   end
 
   it "can find customers by their invoice id" do
