@@ -14,6 +14,14 @@ module Findable
     @all.find {|thing| thing.name.downcase == name.downcase.strip}
   end
 
+  def find_by_first_name(name)
+    @all.find {|thing| thing.first_name.downcase == name.downcase.strip}
+  end
+
+  def find_by_last_name(name)
+    @all.find {|thing| thing.last_name.downcase == name.downcase.strip}
+  end
+
   def find_all_by_name(input)
     @all.select do |thing|
       pieces = thing.name.chars.map do |piece|
