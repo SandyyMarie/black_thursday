@@ -246,28 +246,8 @@ class SalesAnalyst
         item_most_profitable << @item_repository.find_by_id(item).name
       end
     end
-
+    item_most_profitable
   end
-    #   item_revenue = @invoice_item_repository.find_by_id(invoice.id).unit_price.to_i * @invoice_item_repository.find_by_id(invoice.id).quantity
-    #
-    #   if item_revenue > profits[0]
-    #     profits[0] = item_revenue #set new top seller
-    #     item_most_profitable <<  @invoice_item_repository.find_by_id(invoice.id)
-    #   end
-    # end
 
-    #   if item_most_profitable.count == 0 #if its the first input into the array, set top price
-    #     item_most_profitable << invoice
-    #   else #if it is not the first input, compare if greater than or equal to
-    #     if invoice_holder.unit_price > item_most_profitable[0]
-    #       item_most_profitable[0] = invoice #set as top sold
-    #     elsif invoice_holder.unit_price == item_most_profitable[0]
-    #       item_most_profitable << invoice  #push in as array
-    #     end
-    #   end
-    #   item_most_profitable
-    # end
-    # require 'pry' ; binding.pry
-  # end
 
 end

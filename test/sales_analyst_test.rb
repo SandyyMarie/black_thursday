@@ -173,9 +173,13 @@ RSpec.describe SalesAnalyst do
 
   it 'returns most sold item, if it is a tie then it returns an array of, items' do
     expect(sales_analyst.most_sold_item_for_merchant(12334634)).to eq([])
-  end #need more accurate test
+  end
 
   it 'returns most profitable item' do
     expect(sales_analyst.best_item_for_merchant(12334634)).to be_instance_of(Item)
+  end
+
+  it "returns which merchants offer only one item" do
+    expect(sales_analyst.merchants_with_only_one_item).to be_instance_of(Merchant)
   end
 end
