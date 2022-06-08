@@ -60,17 +60,12 @@ RSpec.describe CustomerRepository do
     expect(customer_repo.find_by_id(1001)).to be_instance_of Customer
     expect(customer_repo.find_by_id(1001).first_name).to eq("Mary")
     expect(customer_repo.find_by_id(1001).last_name).to eq("Sue")
-    expect(customer_repo.find_by_id(1001).updated_at).not_to eq(customer_repo.find_by_id(1001).created_at)
-
-    # expect(customer_repo.find_by_id(21831).updated_at).to eq(time.strftime("%Y-%m-%d %H:%M"))
-    # expect(customer_repo.find_by_id(1).updated_at).not_to eq(customer_repo.find_by_id(21831).created_at)
   end
 
   it "can delete an invoice" do
     new_customer
     expect(customer_repo.find_by_id(1001)).to be_instance_of Customer
     expect(customer_repo.find_by_id(1001).first_name).to eq("Joan")
-    # expect(customer_repo.find_by_id(1).updated_at).to eq("2014-03-15")
     customerrepository = double()
     allow(customerrepository).to receive(:delete).and_return("Deletion complete!")
   end

@@ -20,18 +20,22 @@ RSpec.describe Transaction do
 
   it 'returns id' do
     expect(transaction.id).to eq(6)
+    expect(transaction.id).not_to eq(7)
   end
 
   it 'returns invoice id' do
     expect(transaction.invoice_id).to eq(8)
+    expect(transaction.invoice_id).not_to eq(9)
   end
 
   it 'returns result' do
     expect(transaction.result).to eq("success")
+    expect(transaction.result).not_to eq("unsuccessful")
   end
 
   it 'returns credit_card_number' do
     expect(transaction.credit_card_number).to eq("4242424242424242")
+    expect(transaction.credit_card_number).not_to eq("898989")
   end
 
   it 'returns credit card expiration date' do
