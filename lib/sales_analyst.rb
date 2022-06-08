@@ -230,42 +230,19 @@ class SalesAnalyst
     Date::MONTHNAMES[merchant_date_split[1].to_i]
   end
 
-  def merchants_with_only_one_item_registered_in_month
-    merchant_creation_date_hash = {}
-
+  def merchants_with_only_one_item
+    merchant_item_hash = {}
     @merchant_repository.all.each do |merchant|
-      merchant_creation_yyyy_mm = merchant.created_at[0,7]
-      merchant_creation_date_hash[merchant] = merchant_creation_yyyy_mm
+      merchant_item_hash[merchant] = @item_repository.find_all_by_merchant_id(merchant.id)
     end
 
-    items_created_in_month = {}
+    merchants_with_one_item = merchant_item_hash.delete_if {|merchant,items| items.length > 1}
 
-    @item_repository.all.each do |item|
-      item_creation_yyyy_mm = item.created_at[0,7]
-      items_created_in_month[item] = item_creation_yyyy_mm
-    end
+    merchants_with_one_item.keys
+  end
 
-    items_by_merchant_first_month = {}
-
-    merchant_creation_date_hash.each do |merchant,merchant_date|
-      accumulator = []
-      items_created_in_month.each do |item,item_date|
-        if (item.merchant_id == merchant.id) && (item_date == merchant_date)
-          accumulator << item
-        end
-      end
-      items_by_merchant_first_month[merchant] = accumulator
-    end
-
-    return_array = []
-
-    items_by_merchant_first_month.each do |merchant,items|
-      if (items.length == 1)
-        return_array << merchant
-      end
-    end
-
-    return_array
+  def merchants_with_only_one_item_registered_in_month(month)
+    merchants_with_only_one_item.delete_if {|merchant| merchant_creation_month(merchant.id) != month}
   end
 
   def top_revenue_earners(number_to_rank = 20)
