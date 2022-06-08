@@ -201,6 +201,19 @@ class SalesAnalyst
     pending_invoices.map {|invoice| invoice.merchant_id}.uniq
   end
 
+  def merchant_creation_month(merchant_id)
+    merchant = @merchant_repository.find_by_id(merchant_id)
+
+    merchant_date_split = merchant.created_at.split("-")
+
+    Date::MONTHNAMES[merchant_date_split[1].to_i]
+
+  end
+
+  def merchants_with_only_one_item_registered_in_month(month)
+
+  end
+
   def top_revenue_earners(number_to_rank = 20)
     @merchant_repository.all.max_by(number_to_rank) {|merchant| total_revenue_by_merchant(merchant.id)}
   end #work in progress
